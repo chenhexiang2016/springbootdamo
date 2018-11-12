@@ -1,0 +1,123 @@
+server:
+  port: 8082
+
+hjzd:
+  swagger-open: true              #是否开启swagger (true/false)
+  kaptcha-open: false             #是否开启登录时验证码 (true/false)
+  file-upload-path: /home/www/uploads       #    文件上传目录(不配置的话为java.io.tmpdir目录)e:/temp
+  spring-session-open: false      #是否开启spring session,如果是多机环境需要开启(true/false)
+  session-invalidate-time: 1800     #session失效时间(只在单机环境下生效，多机环境在SpringSessionConfig类中配置) 单位：秒
+  session-validation-interval: 900  #多久检测一次失效的session(只在单机环境下生效) 单位：秒
+
+sms:
+  uid: hjzdcrm
+  key: 8a2ad46840cb705e3cde
+
+smss:
+  uid: 9910
+  user: hjzdsh
+  key: hjzd123456
+  url: http://123.57.51.191:8888/sms.aspx
+  code: UTF-8
+  volume: 10000
+
+spring:
+  redis:
+      host: 127.0.0.1
+      port: 6379
+      password:
+      database: 6
+
+  profiles:
+    active: local
+  mvc:
+    static-path-pattern: /static/**
+    view:
+      prefix: /WEB-INF/view
+  resources:
+    static-locations: classpath:/static/,file:${hjzd.file-upload-path}
+  devtools:
+    restart:
+      enabled: false
+      additional-paths: src/main/java
+      exclude: static/**,WEB-INF/view/**
+  servlet:
+    multipart:
+      max-request-size: 100MB
+      max-file-size: 100MB
+
+  thymeleaf:
+    prefix: /WEB-INF/templates/
+    suffix: .html
+    mode: HTML5
+    encoding: UTF-8
+    cache: false  # 设置缓存，默认为true，如果为true，每次修改模板后都需要重启服务器才能生效
+
+mybatis-plus:
+  mapper-locations: classpath*:com/hjzddata/**/mapping/*.xml
+  typeAliasesPackage: com.hjzddata.modular.**.model
+  global-config:
+      id-type: 0  #0:数据库ID自增   1:用户输入id  2:全局唯一id(IdWorker)  3:全局唯一ID(uuid)
+      db-column-underline: false
+      refresh-mapper: true
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
+
+log:
+  path: /opt/hjzd/logs
+
+---
+
+spring:
+  profiles: local
+  datasource:
+    url: jdbc:mysql://192.168.8.105/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: hjzd@hf123
+    db-name: tmk #用来搜集数据库的所有表
+    filters: wall,mergeStat
+
+---
+
+spring:
+  profiles: dev
+  datasource:
+    url: jdbc:mysql://192.168.8.106/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC
+    username: root
+    password: hjzd@hf123
+    db-name: tmk #用来搜集数据库的所有表
+    filters: wall,mergeStat
+
+#多数据源情况的配置
+hjzd:
+  muti-datasource:
+    open: false
+    url: jdbc:mysql://192.168.8.106/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC
+    username: root
+    password: hjzd@hf123
+    dataSourceNames:
+      - dataSourceHjzd
+      - dataSourceBiz
+
+---
+
+spring:
+  profiles: test
+  datasource:
+    url: jdbc:mysql://127.0.0.1/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=UTC
+    username: root
+    password: Hjzd@tmk123
+    filters: wall,mergeStat
+
+---
+
+spring:
+  profiles: produce
+  datasource:
+      url: jdbc:mysql://10.252.2.45/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+      username: root
+      password: Hjzd@hf123
+      db-name: tmk #用来搜集数据库的所有表
+      filters: wall,mergeStat
+
