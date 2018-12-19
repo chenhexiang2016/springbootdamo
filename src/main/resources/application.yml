@@ -1,5 +1,5 @@
 server:
-  port: 8082
+  port: 8083
 
 hjzd:
   swagger-open: true              #是否开启swagger (true/false)
@@ -77,6 +77,17 @@ spring:
     password: hjzd@hf123
     db-name: tmk #用来搜集数据库的所有表
     filters: wall,mergeStat
+
+#多数据源情况的配置
+datasource:
+  muti-datasource:
+    open: true
+    url: jdbc:mysql://192.168.8.106/astercc10?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: hjzd@hf123
+    dataSourceNames:
+    - dataSourceHjzd
+    - dataSourceBiz
 
 ---
 

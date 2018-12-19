@@ -25,7 +25,9 @@ public class UserController {
 
     @RequestMapping("/")
     public String index() throws Exception{
-        new Thread().sleep(1000*10);
+//        new Thread().sleep(1000*10);
         return PREFIX+"index";
     }
+
+
 }
