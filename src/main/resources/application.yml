@@ -62,7 +62,6 @@ mybatis-plus:
       refresh-mapper: true
       logic-delete-value: 1
       logic-not-delete-value: 0
-      sql-injector: com.baomidou.mybatisplus.mapper.LogicSqlInjector
 
 log:
   path: /opt/hjzd/logs

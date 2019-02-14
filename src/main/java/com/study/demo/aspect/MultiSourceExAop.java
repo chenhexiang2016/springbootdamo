@@ -30,7 +30,7 @@ public class MultiSourceExAop implements Ordered {
     @Autowired
     MutiDataSourceProperties mutiDataSourceProperties;
 
-    @Pointcut(value = "@annotation(com.hjzddata.core.mutidatasource.annotion.DataSource)")
+    @Pointcut(value = "@annotation(com.study.demo.Datasource.annotion.DataSource)")
     private void cut() {
 
     }

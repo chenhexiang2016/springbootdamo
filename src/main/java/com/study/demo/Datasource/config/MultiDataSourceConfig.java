@@ -32,14 +32,14 @@ import java.util.HashMap;
  * 注：由于引入多数据源，所以让spring事务的aop要在多数据源切换aop的后面
 
  */
-@Configuration
+/*@Configuration
 @ConditionalOnProperty(prefix = "datasource.muti-datasource", name = "open", havingValue = "true")
 @EnableTransactionManagement(order = 2)
-@MapperScan(basePackages = {"com.study.demo.dao"})
+@MapperScan(basePackages = {"com.study.demo.dao"})*/
 public class MultiDataSourceConfig {
 
     @Bean
-    @ConfigurationProperties(prefix = "hjzd.muti-datasource")
+    @ConfigurationProperties(prefix = "datasource.muti-datasource")
     public MutiDataSourceProperties mutiDataSourceProperties() {
         return new MutiDataSourceProperties();
     }
