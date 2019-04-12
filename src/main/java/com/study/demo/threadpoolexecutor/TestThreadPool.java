@@ -8,8 +8,9 @@ import java.util.concurrent.ThreadPoolExecutor;
 public class TestThreadPool {
     public static void main(String[] args) {
         long start_run=System.currentTimeMillis(); //获取开始时间
-        ThreadPoolExecutor threadPoolExecutor = ThreadPoolExecutorManager.createThreadPoolBean();
-        for (int i=0; i<=50; i++) {
+        ThreadPoolExecutorManager threadPoolExecutorManager = new ThreadPoolExecutorManager(10,10);
+        ThreadPoolExecutor threadPoolExecutor = threadPoolExecutorManager.createThreadPoolBean();
+        for (int i=0; i<=55; i++) {
             MyTask myTask = new MyTask(i);
             try {
                 threadPoolExecutor.execute(myTask);

@@ -6,11 +6,16 @@ import java.util.concurrent.CountDownLatch;
  * 单线程测试类
  */
 public class TestThread {
+    public static Integer counter = 0;
+
     public static void main(String[] args) throws InterruptedException {
-        CountDownLatch countDownLatch = new CountDownLatch(2);
+        /*CountDownLatch countDownLatch = new CountDownLatch(2);
         Thread t1 = new Thread() {
             @Override
             public void run() {
+                for (int i=0; i<=9; i++) {
+                    getCount();
+                }
                 System.out.println("子线程"+Thread.currentThread().getName()+"正在执行");
                 countDownLatch.countDown();
                 System.out.println("countDown的数目是：" + countDownLatch);
@@ -27,6 +32,9 @@ public class TestThread {
         Thread t2 = new Thread() {
             @Override
             public void run() {
+                for (int i=0; i<=9; i++) {
+                    getCount();
+                }
                 System.out.println("子线程"+Thread.currentThread().getName()+"正在执行");
                 countDownLatch.countDown();
                 System.out.println("countDown的数目是：" + countDownLatch);
@@ -44,7 +52,24 @@ public class TestThread {
             countDownLatch.await();//调用await()方法的线程会被挂起，它会等待直到count值为0才继续执行主线程
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }*/
+        for (int i=0; i<=10; i++) {
+            new Thread(new ThreadCount()).start();
         }
-
     }
+
+
+    public static void getCount() {
+        counter ++;
+        System.out.println(counter);
+    }
+
+    public static class ThreadCount implements Runnable {
+        @Override
+        public void run() {
+            counter++;
+            System.out.println(counter);
+        }
+    }
+
 }
