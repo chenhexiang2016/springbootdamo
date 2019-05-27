@@ -1,14 +1,14 @@
 package com.study.demo.threadpoolexecutor;
 
-import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.*;
 
 /**
  * 单线程测试类
  */
 public class TestThread {
-    public static Integer counter = 0;
+    public static  Integer counter = 0;
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
         /*CountDownLatch countDownLatch = new CountDownLatch(2);
         Thread t1 = new Thread() {
             @Override
@@ -53,9 +53,25 @@ public class TestThread {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }*/
-        for (int i=0; i<=10; i++) {
-            new Thread(new ThreadCount()).start();
-        }
+
+
+        //Runnable接口
+//
+        Thread t1 = new Thread(new ThreadCount());
+        t1.start();
+        t1.join();
+        Thread t2 = new Thread(new ThreadCount());
+        t2.start();
+        t2.join();
+        Thread t3 = new Thread(new ThreadCount());
+        t3.start();
+        t3.join();
+
+        //callable接口
+        ThreadCallableTest threadCallableTest = new ThreadCallableTest();
+        FutureTask task = new FutureTask(threadCallableTest);
+        new Thread(task).run();
+        System.out.println(task.get());
     }
 
 
@@ -68,7 +84,15 @@ public class TestThread {
         @Override
         public void run() {
             counter++;
-            System.out.println(counter);
+            System.out.println(Thread.currentThread().getName()+":"+counter);
+        }
+    }
+
+    public static class ThreadCallableTest implements Callable<String> {
+        public volatile Integer num = 0;
+        @Override
+        public String call() throws Exception {
+            return "我是Callable接口实现线程";
         }
     }
 

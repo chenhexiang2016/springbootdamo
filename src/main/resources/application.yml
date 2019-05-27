@@ -53,6 +53,33 @@ spring:
     encoding: UTF-8
     cache: false  # 设置缓存，默认为true，如果为true，每次修改模板后都需要重启服务器才能生效
 
+  #activemq:
+  #    broker-url: tcp://192.168.8.87:61616
+  #    user: admin
+  #    password: admin
+  #    packages:
+  #      trust-all: true     #直接发送对象消息，那么必须设置trust-all为true
+  #    in-memory: false     #开始消息持久化就必须关闭in-memory选项
+      #pool:
+      #  enabled: true
+  rabbitmq:
+      host: 192.168.1.104
+      port: 5672
+      username: admin
+      password: admin
+      publisher-confirms: true #支持发布确认
+      publisher-returns: true  #支持发布返回
+      listener:
+        simple:
+          acknowledge-mode: manual #采用手动应答
+          concurrency: 1 #指定最小的消费者数量
+          max-concurrency: 1 #指定最大的消费者数量
+          retry:
+            enabled: true #是否支持重试
+
+  aop:
+    proxy-target-class: false   #jdk动态代理
+
 mybatis-plus:
   mapper-locations: classpath*:com/hjzddata/**/mapping/*.xml
   typeAliasesPackage: com.hjzddata.modular.**.model
@@ -71,9 +98,9 @@ log:
 spring:
   profiles: local
   datasource:
-    url: jdbc:mysql://192.168.8.105/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    url: jdbc:mysql://192.168.1.105/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
     username: root
-    password: hjzd@hf123
+    password: 123456
     db-name: tmk #用来搜集数据库的所有表
     filters: wall,mergeStat
 
@@ -125,7 +152,7 @@ spring:
 spring:
   profiles: produce
   datasource:
-      url: jdbc:mysql://10.252.2.45/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+      url: jdbc:mysql://127.0.0.1/tmk?autoReconnect=true&useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
       username: root
       password: Hjzd@hf123
       db-name: tmk #用来搜集数据库的所有表

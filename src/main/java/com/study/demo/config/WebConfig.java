@@ -11,7 +11,7 @@ public class WebConfig extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         // addPathPatterns 用于添加拦截规则
         // excludePathPatterns 用户排除拦截
-        registry.addInterceptor(new URLInterceptor()).addPathPatterns("/*/*");//指定拦截器类  指定该类拦截的url
+//        registry.addInterceptor(new URLInterceptor()).addPathPatterns("/*/*");//指定拦截器类  指定该类拦截的url
         super.addInterceptors(registry);
     }
 }
